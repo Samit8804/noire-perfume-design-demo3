@@ -63,12 +63,10 @@ export default function Collection() {
         </header>
 
         <div className="perfume-list">
-          {FRAGRANCES.map((fragrance, index) => (
+          {FRAGRANCES.map((fragrance) => (
             <article
               key={fragrance.name}
-              className={`perfume-row${
-                index % 2 === 1 ? " perfume-row--flip" : ""
-              }`}
+              className="perfume-row"
               data-reveal
             >
               <div className="perfume-num num-ghost" aria-hidden="true">

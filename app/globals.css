@@ -1336,6 +1336,11 @@ button {
 .perfume-row {
   display: grid;
   grid-template-columns: minmax(0, 0.42fr) minmax(0, 0.58fr);
+  /* Same composition on every card (reference — GOLDEN OUD):
+     text column top-left, image column right, ghost numeral below. */
+  grid-template-areas:
+    "body media"
+    "num  .";
   gap: clamp(36px, 5.4vw, 90px);
   align-items: center;
   padding-block: clamp(44px, 8vh, 92px);
@@ -1347,7 +1352,9 @@ button {
 }
 
 .perfume-num {
-  align-self: start;
+  grid-area: num;
+  text-align: right;
+  align-self: center;
   font-family: var(--serif);
   font-size: clamp(4rem, 8vw, 9rem);
   line-height: 0.8;
@@ -1355,6 +1362,7 @@ button {
 }
 
 .perfume-media {
+  grid-area: media;
   aspect-ratio: 4 / 5;
   border: 1px solid var(--hair);
 }
@@ -1368,6 +1376,7 @@ button {
 }
 
 .perfume-body {
+  grid-area: body;
   display: grid;
   gap: clamp(14px, 2.2vh, 22px);
   justify-items: start;
@@ -1422,19 +1431,6 @@ button {
   font-weight: 500;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-}
-
-.perfume-row--flip .perfume-num {
-  order: 3;
-  text-align: right;
-}
-
-.perfume-row--flip .perfume-media {
-  order: 2;
-}
-
-.perfume-row--flip .perfume-body {
-  order: 1;
 }
 
 /* ------------------------------------------------------------
@@ -1879,17 +1875,17 @@ button {
 
   .perfume-row {
     grid-template-columns: 1fr;
+    grid-template-areas:
+      "num"
+      "media"
+      "body";
     align-items: start;
   }
 
   .perfume-num {
-    order: 0 !important;
+    text-align: left;
     font-size: clamp(3rem, 10vw, 4.4rem);
-  }
-
-  .perfume-row--flip .perfume-media,
-  .perfume-row--flip .perfume-body {
-    order: 0;
+    margin-bottom: 6px;
   }
 
   .craft-step {
