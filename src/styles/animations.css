@@ -1,0 +1,207 @@
+/* ============================================================
+   Reveal system
+   ============================================================ */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 1s var(--ease),
+    transform 1.1s var(--ease);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal--fade {
+  transform: none;
+}
+
+.reveal--left {
+  transform: translateX(-26px);
+}
+
+.reveal--right {
+  transform: translateX(26px);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ============================================================
+   Keyframes
+   ============================================================ */
+
+@keyframes grainShift {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  20% {
+    transform: translate(-2%, 1%);
+  }
+  40% {
+    transform: translate(1%, -2%);
+  }
+  60% {
+    transform: translate(-1%, 2%);
+  }
+  80% {
+    transform: translate(2%, 1%);
+  }
+}
+
+@keyframes preloaderPulse {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: rotate(45deg) scale(0.94);
+  }
+  50% {
+    opacity: 1;
+    transform: rotate(45deg) scale(1.04);
+  }
+}
+
+@keyframes orbitSpin {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes floatDust {
+  0% {
+    transform: translate3d(0, 16px, 0) scale(0.8);
+    opacity: 0;
+  }
+  18% {
+    opacity: 1;
+  }
+  82% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(18px, -52px, 0) scale(1.1);
+    opacity: 0;
+  }
+}
+
+@keyframes scrollLine {
+  0% {
+    transform: translateX(-100%);
+  }
+  55% {
+    transform: translateX(250%);
+  }
+  100% {
+    transform: translateX(250%);
+  }
+}
+
+@keyframes hintPulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+@keyframes watermarkIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -46%) scale(1.04);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes viewerIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.995);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes legalIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes spinSlow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ============================================================
+   Reduced motion
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal--fade,
+  .reveal--left,
+  .reveal--right {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .hero__orbit,
+  .hero__particles span,
+  .hero__scroll-line i,
+  .collection__stage-hint i,
+  .preloader__diamond,
+  .stage-placeholder span,
+  .page-grain {
+    animation: none !important;
+  }
+
+  .page-grain {
+    opacity: 0.035;
+  }
+
+  .preloader {
+    transition-duration: 0.35s;
+  }
+
+  .viewer,
+  .legal,
+  .legal__panel {
+    animation: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+  }
+}
