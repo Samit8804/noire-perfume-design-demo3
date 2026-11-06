@@ -8,7 +8,7 @@ import {
   LightIcon,
 } from '../ui/Icons';
 import { navigateToAnchor } from '../../utils/navigation';
-import { scrollState } from '../../hooks/useScrollProgress';
+import { startScrollVideoScrub } from '../../utils/videoScroll';
 
 const features = [
   {
@@ -38,40 +38,19 @@ const features = [
 ];
 
 export default function ExperienceSection() {
-  const heroVideoRef = useRef(null);
   const storyVideoRef = useRef(null);
+  const experienceRef = useRef(null);
 
   useEffect(() => {
-    const videos = [heroVideoRef.current, storyVideoRef.current].filter(
-      Boolean,
+    const cleanup = startScrollVideoScrub(
+      storyVideoRef.current,
+      experienceRef.current,
     );
-
-    if (scrollState.reducedMotion) {
-      videos.forEach((video) => video.pause());
-      return undefined;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const video = entry.target;
-          if (entry.isIntersecting) {
-            const playback = video.play();
-            if (playback) playback.catch(() => {});
-          } else {
-            video.pause();
-          }
-        });
-      },
-      { threshold: 0.25 },
-    );
-
-    videos.forEach((video) => observer.observe(video));
-    return () => observer.disconnect();
+    return () => cleanup();
   }, []);
 
   return (
-    <section id="experience" className="experience">
+    <section id="experience" className="experience" ref={experienceRef}>
       <div className="experience__head">
         <Reveal>
           <span className="eyebrow">
@@ -121,18 +100,6 @@ export default function ExperienceSection() {
       </div>
 
       <div className="experience__cinema">
-        <Reveal className="experience__cinema-item" variant="fade">
-          <video
-            ref={heroVideoRef}
-            className="experience__cinema-video"
-            src="/video/hero-film.mp4"
-            poster="/video/hero-frames/ezgif-frame-001.jpg"
-            muted
-            loop
-            playsInline
-            preload="metadata"
-          />
-        </Reveal>
         <Reveal className="experience__cinema-item" delay={140} variant="fade">
           <video
             ref={storyVideoRef}
@@ -142,7 +109,7 @@ export default function ExperienceSection() {
             muted
             loop
             playsInline
-            preload="metadata"
+            preload="auto"
           />
         </Reveal>
       </div>

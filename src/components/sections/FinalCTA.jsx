@@ -1,17 +1,41 @@
+import { useEffect, useRef } from 'react';
 import Reveal from '../ui/Reveal';
 import { ArrowIcon } from '../ui/Icons';
-import { products } from '../../data/products';
 import { site } from '../../data/site';
 import { navigateToAnchor } from '../../utils/navigation';
+import { scrollState } from '../../hooks/useScrollProgress';
+import { startScrollVideoScrub } from '../../utils/videoScroll';
 
 export default function FinalCTA() {
-  const black = products[0];
+  const finalCtaRef = useRef(null);
+  const finalVideoRef = useRef(null);
+
+  useEffect(() => {
+    const video = finalVideoRef.current;
+    const cleanup = startScrollVideoScrub(video, finalCtaRef.current);
+    if (video) {
+      if (scrollState.reducedMotion) video.pause();
+    }
+    return () => {
+      cleanup();
+      if (video) video.pause();
+    };
+  }, []);
 
   return (
-    <section id="contact" className="final-cta">
+    <section id="contact" className="final-cta" ref={finalCtaRef}>
       <div className="final-cta__glow" aria-hidden="true" />
       <div className="final-cta__image" aria-hidden="true">
-        <img src={black.image} alt="" loading="lazy" />
+        <video
+          ref={finalVideoRef}
+          className="final-cta__video"
+          src="/video/hero-film.mp4"
+          poster="/video/hero-frames/ezgif-frame-001.jpg"
+          muted
+          loop
+          playsInline
+          preload="auto"
+        />
         <span />
       </div>
 
