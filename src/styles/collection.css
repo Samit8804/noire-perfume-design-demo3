@@ -747,6 +747,22 @@
   margin-top: 32px;
 }
 
+.gallery-product__media {
+  margin-top: 30px;
+}
+
+.gallery-product__media img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: center 30%;
+  border: 1px solid rgba(201, 169, 106, 0.2);
+  border-radius: 48% 48% 4px 4px / 34% 34% 4px 4px;
+  background: #0b0908;
+  filter: saturate(0.92) contrast(1.04) brightness(0.96);
+}
+
 .gallery-product__line {
   position: absolute;
   top: -1px;

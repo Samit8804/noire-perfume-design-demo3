@@ -198,6 +198,14 @@ export default function GallerySection({ webgl = true, onOpenProduct }) {
                 </div>
               </dl>
 
+              <figure className="gallery-product__media">
+                <img
+                  src={product.image}
+                  alt={`${product.name} flacon`}
+                  loading="lazy"
+                />
+              </figure>
+
               <div className="gallery-product__actions">
                 <button
                   type="button"

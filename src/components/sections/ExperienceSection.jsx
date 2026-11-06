@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import Reveal from '../ui/Reveal';
 import {
   ArrowIcon,
@@ -7,6 +8,7 @@ import {
   LightIcon,
 } from '../ui/Icons';
 import { navigateToAnchor } from '../../utils/navigation';
+import { scrollState } from '../../hooks/useScrollProgress';
 
 const features = [
   {
@@ -36,6 +38,38 @@ const features = [
 ];
 
 export default function ExperienceSection() {
+  const heroVideoRef = useRef(null);
+  const storyVideoRef = useRef(null);
+
+  useEffect(() => {
+    const videos = [heroVideoRef.current, storyVideoRef.current].filter(
+      Boolean,
+    );
+
+    if (scrollState.reducedMotion) {
+      videos.forEach((video) => video.pause());
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const video = entry.target;
+          if (entry.isIntersecting) {
+            const playback = video.play();
+            if (playback) playback.catch(() => {});
+          } else {
+            video.pause();
+          }
+        });
+      },
+      { threshold: 0.25 },
+    );
+
+    videos.forEach((video) => observer.observe(video));
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section id="experience" className="experience">
       <div className="experience__head">
@@ -84,6 +118,33 @@ export default function ExperienceSection() {
             <span className="experience-card__line" aria-hidden="true" />
           </Reveal>
         ))}
+      </div>
+
+      <div className="experience__cinema">
+        <Reveal className="experience__cinema-item" variant="fade">
+          <video
+            ref={heroVideoRef}
+            className="experience__cinema-video"
+            src="/video/hero-film.mp4"
+            poster="/video/hero-frames/ezgif-frame-001.jpg"
+            muted
+            loop
+            playsInline
+            preload="metadata"
+          />
+        </Reveal>
+        <Reveal className="experience__cinema-item" delay={140} variant="fade">
+          <video
+            ref={storyVideoRef}
+            className="experience__cinema-video"
+            src="/video/story-film.mp4"
+            poster="/video/hero-frames/ezgif-frame-002.jpg"
+            muted
+            loop
+            playsInline
+            preload="metadata"
+          />
+        </Reveal>
       </div>
 
       <Reveal className="experience__statement" variant="fade">

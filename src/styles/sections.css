@@ -590,6 +590,38 @@
   border-bottom: 1px solid rgba(201, 169, 106, 0.15);
 }
 
+.experience__cinema {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(20px, 3vw, 40px);
+  width: 100%;
+  max-width: var(--container);
+  margin: clamp(50px, 8vh, 90px) auto 0;
+}
+
+.experience__cinema-item {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 1px solid rgba(201, 169, 106, 0.14);
+  background: #050404;
+}
+
+.experience__cinema-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #050404;
+}
+
+@media (max-width: 900px) {
+  .experience__cinema {
+    grid-template-columns: 1fr;
+  }
+}
+
 .experience-card {
   position: relative;
   padding: clamp(30px, 4.5vh, 46px) clamp(20px, 2.4vw, 34px);
