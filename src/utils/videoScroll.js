@@ -18,8 +18,9 @@ export function seekVideoToScroll(video, section) {
   if (!Number.isFinite(video.duration) || video.duration <= 0) return;
 
   const rect = section.getBoundingClientRect();
-  const start = rect.top - window.innerHeight;
-  const end = rect.top + rect.height;
+  const top = window.scrollY + rect.top;
+  const start = top - window.innerHeight;
+  const end = top + rect.height;
   const span = Math.max(end - start, 1);
   const progress = Math.min(Math.max((window.scrollY - start) / span, 0), 1);
   const target = Math.min(progress * video.duration, Math.max(video.duration - 0.05, 0));
